@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>ButamwaFirm admin Portal</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<link th:href="@{/publicstyles/ok.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/jquery.min.js/}"></script><script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">BUTAMWA FIRM</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/butamwa/admin}">Home</a></li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/client/reg}">Register Clients</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/milk/sellingmilk}">Selling Milk</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/uploaded/uploads}">Post Cows
+						news</a>
+				</li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link" href="#">Admin Dashboard</a>
+				</li>
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> View All Users </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAllFarmer}">View All Farmers </a> <a
+							sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAlluser}">View Vistors and Admin </a> <a
+							class="dropdown-item" th:href="@{/client/ourCustomers}">View
+							all Customers</a>
+						<!--           <div class="dropdown-divider"></div> -->
+						<a class="dropdown-item" th:href="@{/milk/sellingmilkview}">view
+							Daily Milk</a> <a class="dropdown-item"
+							sec:authorize="hasRole('ROLE_farmerr')"
+							th:href="@{/uploaded/viewAmakuru}">manage cows news</a>
+					</div></li>
+
+			</ul>
+			<form class="form-inline my-2 my-lg-0" th:form-method="post"
+				th:action="@{/logout}">
+				<span><i>welcome</i> <strong><span th:text="${mine}"></span></strong></span>&nbsp;&nbsp;
+				<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Log
+					Out</button>
+			</form>
+		</div>
+	</nav>
+
+	<div class="holla">
+		<div class="message">
+			<center>
+				<span th:text="${msg}" class="alert alert-success"></span>
+			</center>
+		</div>
+		<center>
+			<span class="h3">Kugurisha Amata</span>
+		</center>
+
+		<form th:method="post" th:object="${amata}"
+			th:action="@{/milk/sellingmilk}" class="form-group">
+			<div class="form-group">
+				<label>Client Names</label>
+				<select id="haa" name="clientId"  class="form-control" 
+					>
+					<option value="" ></option>
+					<option value="" disabled selected>Select clients name</option>
+					<option th:each="type : ${clientslist}" th:value="${type.idnum}" th:text="${type.fullname}"></option>
+					
+				</select> 
+<!-- 				<span class="here" th:if="${#fields.hasErrors('clientsnames')}" -->
+<!-- 					th:errors="*{clientsnames}">Name Error</span> -->
+			</div>
+						<div class="form-group">
+                 <label>product name</label>
+				<select th:field="*{productname}"  class="form-control"
+					>
+					<option value="" ></option>
+					<option value="" disabled selected>Select your option</option>
+					<option value="Amata">AMATA</option>
+					
+				</select> <span class="here" th:if="${#fields.hasErrors('productname')}"
+					th:errors="*{productname}">Name Error</span>
+			</div>
+					<div class="form-group">
+                 <label>Time</label>
+				<select th:field="*{saangahe}"  class="form-control"
+					>
+					<option value="" ></option>
+					<option value="" disabled selected>Select your option</option>
+					<option value="KU MUGOROBA">KU MUGOROBA</option>
+					<option value="MU GITONDO">MU GITONDO</option>
+				</select> <span class="here" th:if="${#fields.hasErrors('saangahe')}"
+					th:errors="*{saangahe}">Name Error</span>
+			</div>
+			<div class="form-group">
+				<label>Quantity</label> <select th:field="*{quatyty}"  class="form-control"
+					>
+					<option value="" ></option>
+					<option value="" disabled selected>Select your option</option>
+					<option value="1">1 litre</option>
+					<option value="1.5">1.5 litre</option>
+					<option value="2">2 litre</option>
+					<option value="2.5">2.5 litre</option>
+					<option value="3">3 litre</option>
+					<option value="3.5">3.5 litre</option>
+					<option value="4">4 litre</option>
+					<option value="4.5">4.5 litre</option>
+					<option value="5">5 litre</option>
+					<option value="5.5">5.5 litre</option>
+					<option value="6">6 litre</option>
+					<option value="6.5">6.5 litre</option>
+					<option value="1">7 litre</option>
+					<option value="7.5">7.5 litre</option>
+					<option value="8">8 litre</option>
+					<option value="8.5">8.5 litre</option>
+					<option value="9">9 litre</option>
+					<option value="9.5">9.5 litre</option>
+					<option value="10.5">10 litre</option>
+				</select> <span class="here"
+					th:if="${#fields.hasErrors('quatyty')}" th:errors="*{quatyty}">Name
+					Error</span>
+			</div>
+
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+
+		</form>
+	</div>
+
+</body>
+</html>

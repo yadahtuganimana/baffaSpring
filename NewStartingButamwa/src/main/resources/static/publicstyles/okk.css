@@ -1,0 +1,45 @@
+@charset "ISO-8859-1";
+
+body {
+	margin: 10px, 25px, 0, 25px;
+}
+
+.none {
+	width: 1000Px;
+}
+
+.tm {
+	height: 500px;
+}
+/* Style the navbar */
+#navbar {
+	z-index: 2000 !important;
+}
+
+.title {
+	background-color: #6c757d;
+	padding: 5px 1px 1px 5px;
+	color: white;
+}
+
+#navbar, #navbar>#navbarSupportedContent, #navbarDropdown,
+	.dropdown-menu {
+	z-index: 2000 !important;
+}
+
+.sticky {
+	position: fixed !important;
+	top: 0 !important;;
+	width: 100% !important;
+}
+
+.card {
+	float: left !important;
+	margin-left: 10px !important;
+}
+
+.mytable {
+	width: 80%;
+	margin-left: 45px;
+	margin-top: 50px;
+}

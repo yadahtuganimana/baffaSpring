@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>ButamwaFirm admin Portal</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<link th:href="@{/publicstyles/ok.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/jquery.min.js/}"></script>
+</head>
+<body>
+
+	<div class="holla">
+		<div class="message">
+			<center>
+				<span th:text="${msgz}" class="alert alert-success"></span><a th:href="@{/butamwa/admin}">&nbsp;&nbsp;<button th:text="${mz}" style="color: white !important;"	 class="btn btn-default"></button></a>
+			</center>
+		</div>
+		<center>
+			<span>Hi,&nbsp;<strong th:text="${mine}"></Strong>&nbsp;
+				please complete your registration
+			</span>
+		</center>
+
+		<form class="form-group" method="post" th:object="${myfarmer}"
+			enctype="multipart/form-data" th:action="@{/details/farmerpg}">
+
+
+			<div class="form-group">
+				<label>Phone number</label><input class="form-control po"
+					th:field="*{contactnumber}" type="text" name="otherop"
+					placeholder="provide your contact info" /><span class="here"
+					th:if="${#fields.hasErrors('contactnumber')}"
+					th:errors="*{contactnumber}">Name Error</span>
+			</div>
+			<div class="form-group">
+				<label>National Id</label><input class="form-control po" type="text"
+					th:field="*{nationalidnumber}" name="otherop"
+					placeholder="provide your national id number" /><span class="here"
+					th:if="${#fields.hasErrors('nationalidnumber')}"
+					th:errors="*{nationalidnumber}">Name Error</span>
+			</div>
+			<div class="form-group">
+				<label>your Daily activity </label><input class="form-control po"
+					th:field="*{dailactivity}" type="text" name="otherop"
+					placeholder="what is your daily activity" /><span class="here"
+					th:if="${#fields.hasErrors('dailactivity')}"
+					th:errors="*{dailactivity}">Name Error</span>
+			</div>
+			<div class="form-group">
+				<label>Add your National id file</label><input class="form-control po"
+					value="upload" type="file" name="file" />
+
+			</div>
+			<div class="form-group">
+				<label>Add your image</label><input class="form-control po"
+					value="upload" type="file" name="files" />
+
+			</div>
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+		</form>
+	</div>
+
+
+
+
+
+</body>
+</html>

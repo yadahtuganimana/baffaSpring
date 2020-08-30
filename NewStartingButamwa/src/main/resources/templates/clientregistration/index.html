@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>clients registration</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<link th:href="@{/publicstyles/ok.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/jquery.min.js/}"></script>
+<script type="text/javascript"
+	th:src="@{/css/dataTables.bootstrap4.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/css/dataTables.responsive.min.js}"></script>
+<script th:src="@{/css/responsive.bootstrap4.min.js}"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">BUTAMWA FIRM</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/butamwa/admin}">Home</a></li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/client/reg}">Register Clients</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/milk/sellingmilk}">Selling Milk</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/uploaded/uploads}">Post Cows
+						news</a>
+				</li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link" href="#">Admin Dashboard</a>
+				</li>
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> View All Users </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAllFarmer}">View All Farmers </a> <a
+							sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAlluser}">View Vistors and Admin </a> <a
+							class="dropdown-item" th:href="@{/client/ourCustomers}">View
+							all Customers</a>
+						<!--           <div class="dropdown-divider"></div> -->
+						<a class="dropdown-item" th:href="@{/milk/sellingmilkview}">view
+							Daily Milk</a> <a class="dropdown-item"
+							sec:authorize="hasRole('ROLE_farmerr')"
+							th:href="@{/uploaded/viewAmakuru}">manage cows news</a>
+					</div></li>
+
+			</ul>
+			<form class="form-inline my-2 my-lg-0" th:form-method="post"
+				th:action="@{/logout}">
+				<span><i>welcome</i> <strong><span th:text="${mine}"></span></strong></span>&nbsp;&nbsp;
+				<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Log
+					Out</button>
+			</form>
+		</div>
+	</nav>
+
+
+	<div class="holla">
+		<center>
+			<span class="h3">Clients Registration</span>
+		</center>
+		<div class="message">
+			<center>
+				<span th:text="${ms}" class="alert alert-success"></span>
+			</center>
+		</div>
+		<form class="form-group" th:method="post" th:object="${clientobj}"
+			th:action="@{/client/reg}">
+			<div class="form-group">
+				<label for="formGroupExampleInput">clients name</label> <input
+					type="text" class="form-control" th:field="*{fullname}"
+					placeholder="full names of client" /> <input type="hidden"
+					class="form-control" th:field="*{idnum}"
+					placeholder="full names of client" /><span class="here"
+					th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Name
+					Error</span>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">Contact number</label> <input
+					id="contact" type="text" class="form-control" th:field="*{contact}"
+					placeholder="contact number" /> <span class="here"
+					th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}">Name
+					Error</span>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">address</label> <input
+					type="text" class="form-control" th:field="*{ahoatuye}"
+					placeholder="akagali,umudugudu" /> <span class="here"
+					th:if="${#fields.hasErrors('ahoatuye')}" th:errors="*{ahoatuye}">Name
+					Error</span>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">province</label> <select
+					name="parent" class="form-control"
+					onchange="manageLocation('province')">
+					<option value="" disabled selected>Select province</option>
+					<option th:each="type : ${parentLocation}"
+						th:text="${type.locname}" th:value="${type.uuid}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">district</label> <select
+					name="parent" id='district' class="form-control">
+					<option value="" disabled selected>Select district</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">sector</label> <select
+					name="parent" id="sector" class="form-control">
+					<option value="" disabled selected>Select sector</option>
+					<option th:each="type : ${locationlist}" th:text="${type.locname}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">cell</label> <select
+					name="parent" id="cell" class="form-control">
+					<option value="" disabled selected>Select cell</option>
+					<option th:each="type : ${locationlist}" th:text="${type.locname}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="formGroupExampleInput2">village</label> <select
+					name="parent" class="form-control" id="village">
+					<option value="" disabled selected>Select village</option>
+					<option th:each="type : ${locationlist}" th:text="${type.locname}"></option>
+				</select>
+			</div>
+
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		function manageLocation(type) {
+			console.log("Here we gooooooooooooooooooooooooooooooo" + type);
+			$.ajax({
+				url : "/loc/getLocation/",
+				method : "GET",
+				data : "parentId=" + type,
+				success : function(data) {
+					console.log("------------------------" + data);
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					console.log(xhr.status);
+					console.log(thrownError);
+				}
+			});
+
+		}
+	</script>
+</body>
+</html>

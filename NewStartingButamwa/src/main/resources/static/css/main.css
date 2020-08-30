@@ -1,0 +1,16 @@
+@charset "ISO-8859-1";
+h1 {
+    color: #78ab46;
+}
+
+.error-message {
+    color: #a94442;
+}
+.none{
+			margin-top: 60px;
+			width: 1000px;
+			margin-left: 40px;
+		}
+.error-message:first-letter {
+    text-transform: capitalize;
+}

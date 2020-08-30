@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+
+<script th:src="@{/css/responsive.bootstrap4.min.js}"></script>
+<link th:href="@{/publicstyles/ok.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/jquery.min.js/}"></script><script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+<title>Registration</title>
+</head>
+<body>
+		<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">BUTAMWA FIRM</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/butamwa/admin}">Home</a></li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/client/reg}">Register Clients</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/milk/sellingmilk}">Selling Milk</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmerr')" class="nav-item active">
+					<a class="nav-link" th:href="@{/uploaded/uploads}">Post Cows
+						news</a>
+				</li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link" href="#">Admin Dashboard</a>
+				</li>
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> View All Users </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAllFarmer}">View All Farmers </a> <a
+							sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAlluser}">View Vistors and Admin </a> <a
+							class="dropdown-item" th:href="@{/client/ourCustomers}">View
+							all Customers</a>
+						<!--           <div class="dropdown-divider"></div> -->
+						<a class="dropdown-item" th:href="@{/milk/sellingmilkview}">view
+							Daily Milk</a> <a class="dropdown-item"
+							sec:authorize="hasRole('ROLE_farmerr')"
+							th:href="@{/uploaded/viewAmakuru}">manage cows news</a>
+					</div></li>
+
+			</ul>
+			<form class="form-inline my-2 my-lg-0" th:form-method="post"
+				th:action="@{/logout}">
+				<span><i>welcome</i> <strong><span th:text="${mine}"></span></strong></span>&nbsp;&nbsp;
+				<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Log
+					Out</button>
+			</form>
+		</div>
+	</nav>
+	<div class="none">
+		<span th:text="${msg}"></span>
+		<form method="post" th:object="${newobj}" enctype="multipart/form-data"
+			th:action="@{/uploaded/save}">
+			<div class="form-group">
+                    <label for="username">title</label>:
+                    <input type="text"
+                           id="title"
+                           th:field="*{imagetitle}"
+                           name="usernamee"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="provide your title"/>
+                           <input type="hidden"
+                           id="title"
+                           th:field="*{photoId}"
+                           name="usernamee"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="provide your title"/>
+                </div>
+                <div class="form-group">
+                    <label for="username">message</label>:
+                                             
+                           <textarea rows="20" cols="20" id="message"
+                           name="usernamee"
+                           th:field="*{imagebody}"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="describe your message in full details..."></textarea>
+                </div>
+               
+			<input  class="" value="upload" type="file" name="file" /><input
+				class="btn btn-primary" type="submit" name="publish" />
+		</form>
+	</div>
+	
+	<!-- <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js/}"></script> -->
+	<!-- <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script> -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

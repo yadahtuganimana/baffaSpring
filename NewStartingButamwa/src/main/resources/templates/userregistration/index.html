@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>ButamwaFirm admin Portal</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<link th:href="@{/publicstyles/ok.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/jquery.min.js/}"></script>
+</head>
+<body>
+   	<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">BUTAMWA FIRM</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/butamwa/admin}">Home</a></li>
+				<li sec:authorize="hasRole('ROLE_farmer')" class="nav-item active">
+					<a class="nav-link" th:href="@{/client/reg}">Register Clients</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmer')" class="nav-item active">
+					<a class="nav-link" th:href="@{/milk/sellingmilk}">Selling Milk</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_farmer')" class="nav-item active">
+					<a class="nav-link" th:href="@{/uploaded/uploads}">Post Cows
+						news</a>
+				</li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item active">
+					<a class="nav-link" href="#">Admin Dashboard</a>
+				</li>
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> View All Users </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAllFarmer}">View All Farmers </a> <a
+							sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item"
+							th:href="@{/butamwa/ViewAlluser}">View Vistors and Admin </a> <a
+							class="dropdown-item" th:href="@{/client/ourCustomers}">View
+							all Customers</a>
+						<!--           <div class="dropdown-divider"></div> -->
+						<a class="dropdown-item" th:href="@{/milk/sellingmilkview}">view
+							Daily Milk</a> <a class="dropdown-item"
+							sec:authorize="hasRole('ROLE_farmer')"
+							th:href="@{/uploaded/viewAmakuru}">manage cows news</a>
+					</div></li>
+
+			</ul>
+			<form class="form-inline my-2 my-lg-0" th:form-method="post"
+				th:action="@{/logout}">
+				<span><i>welcome</i> <strong><span th:text="${mine}"></span></strong></span>&nbsp;&nbsp;
+				<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Log
+					Out</button>
+			</form>
+		</div>
+	</nav>
+   
+	<div class="holla">
+		<div class="message">
+			<center>
+				<span th:text="${msg}" class="alert alert-success"></span>
+			</center>
+		</div>
+		<center>
+			<span class="h3">USER REGISTRATION</span>
+		</center>
+
+		<form th:method="post" th:object="${myobj}"
+			th:action="@{/butamwa/registeruser}" class="form-group">
+			<div class="form-group">
+				<label>FirstNames</label> <input class="form-control" type="text"
+					placeholder="write your firstname" th:field="*{userfirstname}" /><input
+					type="hidden" th:field="*{idnum}"> <span class="here"
+					th:if="${#fields.hasErrors('userfirstname')}"
+					th:errors="*{userfirstname}">Name Error</span>
+			</div>
+			<div class="form-group">
+				<label>LastNames</label> <input class="form-control" type="text"
+					placeholder="write your lastname" th:field="*{userlastname}" /> <span
+					class="here" th:if="${#fields.hasErrors('userlastname')}"
+					th:errors="*{userlastname}">Name Error</span>
+			</div>
+			<div class="form-group">
+				<label>UserName</label> <input id="username" class="form-control"
+					type="text" th:field="*{username}" /> <span class="here"
+					th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name
+					Error</span>
+			</div>
+
+			<div class="form-group">
+				<label>Password</label> <input id="password" class="form-control"
+					type="password" th:field="*{passwordd}" /> <span class="here"
+					th:if="${#fields.hasErrors('passwordd')}" th:errors="*{passwordd}">Name
+					Error</span>
+
+			</div>
+
+
+			<div class="form-group">
+				<label>User type</label>
+				<!-- 				<select name="userTypeId" -->
+				<!-- 					class="form-control"> -->
+				<!-- 					<option th:each="type : ${userTypeList}" th:value="${type.id} " -->
+				<!-- 						th:text="${type.userTypeOption}"></option> 
+
+				</select>-->
+				<select th:field="*{roles}" name="userTypeId" class="form-control"
+					onchange="admSelectCheck(this);">
+					<option value="" disabled selected>Select your option</option>
+					<option value="ADMIN">ADMIN</option>
+					<option value="FARMER">FARMER</option>
+					<option value="VISITOR">VISITOR</option>
+				</select> <span class="here" th:if="${#fields.hasErrors('roles')}"
+					th:errors="*{roles}">Name Error</span>
+			</div>
+
+			<button type="submit" class="btn btn-primary" value="Save">Save</button>
+
+		</form>
+	</div>
+
+</body>
+</html>

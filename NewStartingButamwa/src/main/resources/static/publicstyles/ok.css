@@ -1,0 +1,59 @@
+@charset "ISO-8859-1";
+
+.holla {
+	width: 500px;
+	margin-left: 450px;
+	margin-top: 90px;
+}
+
+.sticky {
+	position: fixed !important;
+	top: 0 !important;;
+	width: 100% !important;
+}
+#navbar {
+	z-index: 2000 !important;
+}
+.carousel-item>img {
+	height: 40% !important;
+}
+
+.can {
+	color: green;
+}
+
+.here {
+	color: red;
+}
+
+button {
+	margin-left: 10px;
+}
+
+.holl {
+	width: 400px;
+	margin-left: 400px;
+	margin-top: 30px;
+	border: 1px solid black;
+	height: 400px;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.inside {
+	width: 300px;
+	height: 300px;
+	margin-top: 20%;
+	margin-left: 10%;
+	position: center;
+}
+
+.message {
+	height: 50px;
+	width: 500px;
+	background-color: #d4edda;
+	padding: 13px;
+}
+
+.alert-success {
+	border-color: transparent !important;
+}
